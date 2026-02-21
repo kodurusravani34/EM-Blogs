@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const Footer = () => {
+    const { user } = useAuth();
     return (
         <footer className="bg-cream-dark border-t border-ink-ghost mt-20">
             <div className="container-center py-12">
@@ -10,7 +12,7 @@ const Footer = () => {
                             <div className="w-10 h-10 bg-ink rounded-lg flex items-center justify-center shadow-sm">
                                 <span className="text-cream font-serif font-bold text-xl">EM</span>
                             </div>
-                            <span className="font-serif text-2xl font-bold italic">em blogs</span>
+                            <span className="font-serif text-2xl font-bold italic">blogs</span>
                         </Link>
                         <p className="text-ink-lighter text-sm leading-relaxed max-w-sm">
                             A handcrafted digital space for personal storytelling and thoughtful insights.
@@ -28,8 +30,17 @@ const Footer = () => {
                     <div>
                         <h4 className="font-semibold text-sm mb-4 uppercase tracking-wider text-ink-lighter">Account</h4>
                         <ul className="space-y-2.5">
-                            <li><Link to="/login" className="text-sm text-ink-lighter hover:text-ink transition-colors">Sign in</Link></li>
-                            <li><Link to="/register" className="text-sm text-ink-lighter hover:text-ink transition-colors">Create account</Link></li>
+                            {!user ? (
+                                <>
+                                    <li><Link to="/login" className="text-sm text-ink-lighter hover:text-ink transition-colors">Sign in</Link></li>
+                                    <li><Link to="/register" className="text-sm text-ink-lighter hover:text-ink transition-colors">Create account</Link></li>
+                                </>
+                            ) : (
+                                <>
+                                    <li><Link to={`/profile/${user._id}`} className="text-sm text-ink-lighter hover:text-ink transition-colors">My Profile</Link></li>
+                                    <li><Link to="/write" className="text-sm text-ink-lighter hover:text-ink transition-colors">Start Writing</Link></li>
+                                </>
+                            )}
                             <li><Link to="/bookmarks" className="text-sm text-ink-lighter hover:text-ink transition-colors">Bookmarks</Link></li>
                         </ul>
                     </div>

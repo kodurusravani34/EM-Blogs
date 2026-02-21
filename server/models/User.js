@@ -38,7 +38,11 @@ const userSchema = new mongoose.Schema({
     isBlocked: {
         type: Boolean,
         default: false
-    }
+    },
+    links: [{
+        name: String,
+        url: String
+    }]
 }, {
     timestamps: true
 });

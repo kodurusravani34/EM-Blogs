@@ -62,8 +62,15 @@ articleSchema.pre('save', function (next) {
         this.readingTime = Math.max(1, Math.ceil(wordCount / 200));
     }
     if (this.isModified('content') && !this.excerpt) {
-        const text = this.content.replace(/<[^>]*>/g, '');
-        this.excerpt = text.substring(0, 160) + (text.length > 160 ? '...' : '');
+        const text = this.content
+            .replace(/<[^>]*>/g, '') // Strip HTML tags
+            .replace(/&nbsp;/g, ' ') // Replace non-breaking spaces
+            .replace(/&amp;/g, '&')  // Replace ampersands
+            .replace(/&lt;/g, '<')   // Replace less than
+            .replace(/&gt;/g, '>')   // Replace greater than
+            .replace(/&quot;/g, '"') // Replace quotes
+            .replace(/&#39;/g, "'"); // Replace apostrophes
+        this.excerpt = text.trim().substring(0, 160) + (text.length > 160 ? '...' : '');
     }
     next();
 });

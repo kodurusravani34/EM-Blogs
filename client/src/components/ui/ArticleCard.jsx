@@ -37,7 +37,12 @@ const ArticleCard = ({ article }) => {
                             {title}
                         </h2>
                         <p className="text-ink-lighter text-lg md:text-xl leading-relaxed line-clamp-3 font-light tracking-wide max-w-xl">
-                            {excerpt}
+                            {excerpt?.replace(/&nbsp;/g, ' ')
+                                .replace(/&amp;/g, '&')
+                                .replace(/&lt;/g, '<')
+                                .replace(/&gt;/g, '>')
+                                .replace(/&quot;/g, '"')
+                                .replace(/&#39;/g, "'")}
                         </p>
                     </Link>
 

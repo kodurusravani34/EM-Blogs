@@ -57,6 +57,12 @@
     line-height: 1.2;
     font-weight: 700;
   }
+
+  button,
+  a,
+  [role="button"] {
+    cursor: pointer;
+  }
 }
 
 @layer components {

@@ -106,7 +106,8 @@ router.get('/me', protect, async (req, res) => {
             email: req.user.email,
             bio: req.user.bio,
             profilePicture: req.user.profilePicture,
-            role: req.user.role
+            role: req.user.role,
+            links: req.user.links
         }
     });
 });
@@ -114,10 +115,17 @@ router.get('/me', protect, async (req, res) => {
 // Update profile
 router.put('/profile', protect, upload.single('profilePicture'), async (req, res) => {
     try {
-        const { name, bio } = req.body;
+        const { name, bio, links } = req.body;
         const updateData = {};
         if (name) updateData.name = name;
         if (bio !== undefined) updateData.bio = bio;
+        if (links) {
+            try {
+                updateData.links = JSON.parse(links);
+            } catch (e) {
+                console.error('Error parsing links:', e);
+            }
+        }
         if (req.file) {
             updateData.profilePicture = `/uploads/${req.file.filename}`;
         }
@@ -129,7 +137,8 @@ router.put('/profile', protect, upload.single('profilePicture'), async (req, res
                 email: user.email,
                 bio: user.bio,
                 profilePicture: user.profilePicture,
-                role: user.role
+                role: user.role,
+                links: user.links
             }
         });
     } catch (error) {
@@ -152,6 +161,7 @@ router.get('/profile/:id', async (req, res) => {
                 bio: user.bio,
                 profilePicture: user.profilePicture,
                 role: user.role,
+                links: user.links,
                 createdAt: user.createdAt
             }
         });
