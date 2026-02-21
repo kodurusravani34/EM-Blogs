@@ -1,4 +1,4 @@
-# EM Blogs 🚀  
+# EM Blogs
 **A Premium Editorial Publishing Platform**
 
 EM Blogs is a handcrafted digital space designed for personal storytelling and thoughtful insights. Built with a minimalist, high-end "Journal" aesthetic inspired by Medium.com, it provides writers with a cinematic platform to preserve their legacy and share their journeys with the world.
