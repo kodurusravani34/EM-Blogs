@@ -206,6 +206,20 @@
   }
 }
 
+.fade-in {
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 /* Glassmorphism Classes */
 .glass-nav {
   @apply bg-cream/80 backdrop-blur-xl border-b border-ink-ghost sticky top-0 z-50;

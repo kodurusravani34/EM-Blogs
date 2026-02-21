@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FiArrowRight } from 'react-icons/fi';
 import { format } from 'date-fns';
+import { BASE_URL } from '../../config';
 
 const ArticleCard = ({ article }) => {
     const { title, slug, excerpt, coverImage, author, keywords, createdAt } = article;
@@ -12,7 +13,7 @@ const ArticleCard = ({ article }) => {
                 {coverImage && (
                     <Link to={`/article/${slug}`} className="w-full lg:w-1/2 overflow-hidden rounded-[2.5rem] shadow-2xl shadow-ink/5 aspect-[16/10] relative">
                         <img
-                            src={`http://localhost:5000${coverImage}`}
+                            src={`${BASE_URL}${coverImage}`}
                             alt={title}
                             className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110"
                         />

@@ -7,6 +7,7 @@ import { ProfileSkeleton } from '../components/ui/Skeletons';
 import toast from 'react-hot-toast';
 import { format } from 'date-fns';
 import { FiCalendar, FiEdit3, FiCamera, FiX, FiCheck, FiFileText, FiTag, FiLink, FiPlus, FiTrash2, FiGithub, FiLinkedin, FiGlobe } from 'react-icons/fi';
+import { BASE_URL } from '../config';
 
 const Profile = () => {
     const { id } = useParams();
@@ -51,7 +52,7 @@ const Profile = () => {
     const handleStartEdit = () => {
         setEditName(profile.name);
         setEditBio(profile.bio || '');
-        setEditPreview(profile.profilePicture ? `http://localhost:5000${profile.profilePicture}` : '');
+        setEditPreview(profile.profilePicture ? `${BASE_URL}${profile.profilePicture}` : '');
         setEditLinks(profile.links || []);
         setEditing(true);
     };
@@ -70,7 +71,9 @@ const Profile = () => {
             const formData = new FormData();
             formData.append('name', editName);
             formData.append('bio', editBio);
-            formData.append('links', JSON.stringify(editLinks));
+            // Filter out links that have neither name nor URL
+            const validLinks = editLinks.filter(l => l.name.trim() || l.url.trim());
+            formData.append('links', JSON.stringify(validLinks));
             if (editImage) formData.append('profilePicture', editImage);
             const { data } = await authAPI.updateProfile(formData);
             setProfile(data.user);
@@ -135,7 +138,7 @@ const Profile = () => {
                                 </>
                             ) : (
                                 profile.profilePicture ? (
-                                    <img src={`http://localhost:5000${profile.profilePicture}`} alt="" className="w-full h-full object-cover" />
+                                    <img src={`${BASE_URL}${profile.profilePicture}`} alt="" className="w-full h-full object-cover" />
                                 ) : (
                                     <span className="text-3xl font-bold text-ink-lighter">{profile.name?.charAt(0)}</span>
                                 )

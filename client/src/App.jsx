@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/layout/Navbar';
@@ -13,6 +14,15 @@ import Profile from './pages/Profile';
 import Bookmarks from './pages/Bookmarks';
 import Search from './pages/Search';
 import AdminDashboard from './pages/AdminDashboard';
+
+// Scroll to top on navigation
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
 
 // Protected route wrapper
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -30,31 +40,36 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
 };
 
 function AppContent() {
+  const location = useLocation();
+
   return (
     <div className="min-h-screen bg-cream flex flex-col">
+      <ScrollToTop />
       <Navbar />
-      <main className="flex-1">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/article/:slug" element={<ArticleDetail />} />
-          <Route path="/profile/:id" element={<Profile />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/write" element={
-            <ProtectedRoute><WriteArticle /></ProtectedRoute>
-          } />
-          <Route path="/write/:id" element={
-            <ProtectedRoute><WriteArticle /></ProtectedRoute>
-          } />
-          <Route path="/bookmarks" element={
-            <ProtectedRoute><Bookmarks /></ProtectedRoute>
-          } />
-          <Route path="/admin" element={
-            <ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>
-          } />
-        </Routes>
+      <main className="flex-1" key={location.pathname}>
+        <div className="fade-in">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/article/:slug" element={<ArticleDetail />} />
+            <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/write" element={
+              <ProtectedRoute><WriteArticle /></ProtectedRoute>
+            } />
+            <Route path="/write/:id" element={
+              <ProtectedRoute><WriteArticle /></ProtectedRoute>
+            } />
+            <Route path="/bookmarks" element={
+              <ProtectedRoute><Bookmarks /></ProtectedRoute>
+            } />
+            <Route path="/admin" element={
+              <ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>
+            } />
+          </Routes>
+        </div>
       </main>
       <Footer />
       <Toaster

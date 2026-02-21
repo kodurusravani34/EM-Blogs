@@ -30,7 +30,8 @@ router.post('/register', async (req, res) => {
                 email: user.email,
                 bio: user.bio,
                 profilePicture: user.profilePicture,
-                role: user.role
+                role: user.role,
+                links: user.links
             }
         });
     } catch (error) {
@@ -62,7 +63,8 @@ router.post('/login', async (req, res) => {
                 email: user.email,
                 bio: user.bio,
                 profilePicture: user.profilePicture,
-                role: user.role
+                role: user.role,
+                links: user.links
             }
         });
     } catch (error) {
@@ -89,7 +91,8 @@ router.post('/admin/login', async (req, res) => {
                 _id: user._id,
                 name: user.name,
                 email: user.email,
-                role: user.role
+                role: user.role,
+                links: user.links
             }
         });
     } catch (error) {
